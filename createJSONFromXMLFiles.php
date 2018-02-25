@@ -1,12 +1,14 @@
 <?php
+// To remove php memory limits
+//ini_set('memory_limit', '-1');
+$folder = '../lod-dictionary-mirror/XML';
 
-$folder = 'lod-dictionary-mirror/XML';
 
 $lemmas = [];
-foreach (new DirectoryIterator($folder) as $i => $fileInfo) {
+foreach (new DirectoryIterator($folder) as $fc => $fileInfo) {
     if ($fileInfo->isDot()) continue;
 
-    if ($i > 100) continue; // Only the first 100 (for tests). Remember to remove this.
+    //if ($fc > 150) continue; // Only the first 100 (for tests). Remember to remove this.
 
     $filename = $fileInfo->getPathname();
 
@@ -111,60 +113,127 @@ foreach (new DirectoryIterator($folder) as $i => $fileInfo) {
             }
 
             if ($traitementLing) {
-                $uniteTrad = $traitementLing->{'UNITE-TRAD'}[0];
-                if ($uniteTrad) {
-                    $pasDeTradSubordonnante = $uniteTrad->{'PAS-DE-TRAD-SUBORDONNANTE'}[0];
-                    if ($pasDeTradSubordonnante) {
-                        $unitesDeSens = $pasDeTradSubordonnante->{'UNITE-DE-SENS'};
-                        if ($unitesDeSens) {
-                            $data['translations'] = [];
+                $uniteTrads = $traitementLing->{'UNITE-TRAD'};
+                $data['meanings'] = [];
+                $i = 0;
+                if ($uniteTrads) {
+                    foreach ($uniteTrads as $uniteTrad) {
+                        $pasDeTradSubordonnante = $uniteTrad->{'PAS-DE-TRAD-SUBORDONNANTE'}[0];
+                        if ($pasDeTradSubordonnante) {
+                            $unitesDeSens = $pasDeTradSubordonnante->{'UNITE-DE-SENS'};
+                            if ($unitesDeSens) {
+                                $meaning['translations'] = [];
+                                $j = 0;
+                                foreach ($unitesDeSens as $uniteDeSens) {
+                                    $domSpec      = $unitesDeSens->{'DOM-SPEC'};
+                                    $marqueUsage  = $unitesDeSens->{'MARQUE-USAGE'};
+                                    $meaningLux   = $unitesDeSens->{'UNITE-POLYLEX-LUX'};
+                                    $equivTradAll = $unitesDeSens->{'EQUIV-TRAD-ALL'};
+                                    $equivTradFr  = $unitesDeSens->{'EQUIV-TRAD-FR'};
+                                    $equivTradEn  = $unitesDeSens->{'EQUIV-TRAD-EN'};
+                                    $equivTradPo  = $unitesDeSens->{'EQUIV-TRAD-PO'};
+                                    $examples     = $unitesDeSens->{'EXEMPLIFICATION'};
+                                    $synonyms     = $unitesDeSens->{'SYNONYMES'};
 
-                            $i = 0;
-                            foreach ($unitesDeSens as $uniteDeSens) {
+                                    $meaning['translations'] = [
+                                        'lb' => [],
+                                        'de' => [],
+                                        'fr' => [],
+                                        'en' => [],
+                                        'pt' => [],
+                                    ];
+                                    
+                                    
+                                    $meaning['translations']['lb'][] = (string)$meaningLux;
 
-                                $domSpec      = $unitesDeSens->{'DOM-SPEC'};
-                                $marqueUsage  = $unitesDeSens->{'MARQUE-USAGE'};
-                                $equivTradAll = $unitesDeSens->{'EQUIV-TRAD-ALL'};
-                                $equivTradFr  = $unitesDeSens->{'EQUIV-TRAD-FR'};
-                                $equivTradEn  = $unitesDeSens->{'EQUIV-TRAD-EN'};
-                                $equivTradPo  = $unitesDeSens->{'EQUIV-TRAD-PO'};
-
-                                $data['translations'][$i] = [
-                                    'de' => [],
-                                    'fr' => [],
-                                    'en' => [],
-                                    'pt' => [],
-                                ];
-                                foreach ($equivTradAll->children() as $translation) {
-                                    if (!strpos($translation->getName(), 'ABSENTE')) {
-                                        $data['translations'][$i]['de'][] = (string)$translation;
-                                    }
-                                }
-
-                                foreach ($equivTradFr->children() as $translation) {
-                                    if (!strpos($translation->getName(), 'ABSENTE')) {
-                                        $data['translations'][$i]['fr'][] = (string)$translation;
-                                    }
-                                }
-
-                                if ($equivTradEn) {
-                                    foreach ($equivTradEn->children() as $translation) {
+                                    foreach ($equivTradAll->children() as $translation) {
                                         if (!strpos($translation->getName(), 'ABSENTE')) {
-                                            $data['translations'][$i]['en'][] = (string)$translation;
+                                            if (strpos($translation->getName(), 'ETA-PRESENTE')){
+                                                $meaning['translations']['de'][] = "[".(string)$translation."]";
+                                            } else {
+                                                $meaning['translations']['de'][] = (string)$translation;
+                                            }
                                         }
                                     }
-                                }
 
-                                if ($equivTradPo) {
-                                    foreach ($equivTradPo->children() as $translation) {
+                                    foreach ($equivTradFr->children() as $translation) {
                                         if (!strpos($translation->getName(), 'ABSENTE')) {
-                                            $data['translations'][$i]['pt'][] = (string)$translation;
+                                            if (strpos($translation->getName(), 'ETA-PRESENTE')){
+                                                $meaning['translations']['fr'][] = "[".(string)$translation."]";
+                                            } else {
+                                                $meaning['translations']['fr'][] = (string)$translation;
+                                            }
                                         }
                                     }
-                                }
-                                $i++;
+
+                                    if ($equivTradEn) {
+                                        foreach ($equivTradEn->children() as $translation) {
+                                            if (!strpos($translation->getName(), 'ABSENTE')) {
+                                                if (strpos($translation->getName(), 'ETA-PRESENTE')){
+                                                    $meaning['translations']['en'][] = "[".(string)$translation."]";
+                                                } else {
+                                                    $meaning['translations']['en'][] = (string)$translation;
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                    if ($equivTradPo) {
+                                        foreach ($equivTradPo->children() as $translation) {
+                                            if (!strpos($translation->getName(), 'ABSENTE')) {
+                                                if (strpos($translation->getName(), 'ETA-PRESENTE')){
+                                                    $meaning['translations']['pt'][] = "[".(string)$translation."]";
+                                                } else {
+                                                    $meaning['translations']['pt'][] = (string)$translation;
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                    $meaning['examples'] = [];
+
+                                    foreach ($examples->children() as $example) {
+                                        $example = $example->{'TEXTE-EX'};
+                                        $example_text = "";
+                                        foreach ($example->children() as $chunk) {
+                                            if ($chunk->getName()=='TEXTE') {
+                                                if (preg_match('/[\?!.;]$/',(string)$chunk)){
+                                                    $example_text = substr($example_text, 0, -1).(string)$chunk;
+                                                } else {
+                                                    $example_text .= (string)$chunk;
+                                                }
+                                            }
+                                            if ($chunk->getName()=='ABREV-AD') {
+                                                $sign = (string)$chunk;
+                                                //echo $sign."\n";
+                                                if (preg_match('/\.e$/',$sign)){
+                                                    //echo "ends with .e ".$sign."\n";
+                                                    $example_text .= " ".$data['lemma']."e ";
+                                                } elseif (preg_match('/[a-zA-Z\x7f-\xff]\.$/', $sign)) {
+                                                    //echo "in regex match ".$sign."\n";
+                                                    if (mb_substr($example_text,-1) === '\''){
+                                                        $example_text .= $data['lemma']." ";    
+                                                    } else {
+                                                        $example_text .= " ".$data['lemma']." ";
+                                                    }
+                                                } else {
+                                                    if (mb_substr($example_text,-1) === '\''){
+                                                        $example_text .= $sign." ";    
+                                                    } else {
+                                                        $example_text .= " ".$sign." ";
+                                                    }                                                
+                                                }
+                                            }
+                                        }
+                                        $meaning['examples'][] = trim((string)$example_text);
+                                    }
+
+                                    $j++;
+                                }    
                             }
                         }
+                        $data['meanings'][$i] = $meaning;
+                        $i++;
                     }
                 }
             }

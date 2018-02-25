@@ -1,0 +1,1286 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.lod.lu/" xmlns:lod="http://www.lod.lu/">
+  <xs:element name="LOD">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="lod:content-description"/>
+        <xs:element name="content-description" form="unqualified">
+          <xs:complexType mixed="true">
+            <xs:attribute name="lang" use="required" type="xs:NCName"/>
+          </xs:complexType>
+        </xs:element>
+        <xs:element ref="lod:META"/>
+        <xs:element maxOccurs="unbounded" ref="lod:ITEM"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="content-description">
+    <xs:complexType mixed="true">
+      <xs:attribute name="lang" use="required" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ITEM">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="lod:META"/>
+        <xs:element ref="lod:ARTICLE"/>
+        <xs:element minOccurs="0" ref="lod:AUDIO"/>
+        <xs:choice minOccurs="0">
+          <xs:element ref="lod:FLX-ADJ"/>
+          <xs:element ref="lod:FLX-VRB"/>
+        </xs:choice>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ARTICLE">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="lod:ITEM-ADRESSE"/>
+        <xs:element ref="lod:MICROSTRUCTURE"/>
+        <xs:choice>
+          <xs:element ref="lod:RESEAU-NON-SEMANTIQUE"/>
+          <xs:element minOccurs="0" maxOccurs="unbounded" ref="lod:tag"/>
+        </xs:choice>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ITEM-ADRESSE">
+    <xs:complexType mixed="true">
+      <xs:attribute name="ID-ITEM-ADRESSE" use="required" form="qualified" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="MICROSTRUCTURE">
+    <xs:complexType>
+      <xs:choice>
+        <xs:element ref="lod:MS-TYPE-ADJ"/>
+        <xs:element ref="lod:MS-TYPE-ADV"/>
+        <xs:element ref="lod:MS-TYPE-ART"/>
+        <xs:element ref="lod:MS-TYPE-CONJ"/>
+        <xs:element ref="lod:MS-TYPE-ELEM-COMP"/>
+        <xs:element ref="lod:MS-TYPE-PART"/>
+        <xs:element ref="lod:MS-TYPE-PREP"/>
+        <xs:element ref="lod:MS-TYPE-PREP-plus-ART"/>
+        <xs:element ref="lod:MS-TYPE-PRON"/>
+        <xs:element ref="lod:MS-TYPE-PRONADV"/>
+        <xs:element ref="lod:MS-TYPE-SUBST"/>
+        <xs:element maxOccurs="unbounded" ref="lod:MS-TYPE-VRB"/>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="MS-TYPE-ADJ">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="lod:CAT-GRAM-ADJ"/>
+        <xs:choice>
+          <xs:element ref="lod:RENVOI-ADJ"/>
+          <xs:element ref="lod:TRAITEMENT-LING-ADJ"/>
+        </xs:choice>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CAT-GRAM-ADJ">
+    <xs:complexType>
+      <xs:attribute name="C-G-ADJ" form="qualified" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RENVOI-ADJ">
+    <xs:complexType>
+      <xs:choice>
+        <xs:element ref="lod:VARIANTE-HOMOSEME"/>
+        <xs:element ref="lod:VARIANTE-ORTHOGRAPHIQUE"/>
+      </xs:choice>
+      <xs:attribute name="REF-ID-ITEM-ADRESSE" use="required" form="qualified" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="TRAITEMENT-LING-ADJ">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="lod:TRADUCTION-DOMINANTE"/>
+        <xs:element maxOccurs="unbounded" ref="lod:UNITE-TRAD"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="MS-TYPE-ADV">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="lod:CAT-GRAM-ADV"/>
+        <xs:choice>
+          <xs:element ref="lod:COMPOSITION"/>
+          <xs:element ref="lod:RENVOI-ADV"/>
+          <xs:element ref="lod:TRAITEMENT-LING-ADV"/>
+        </xs:choice>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CAT-GRAM-ADV">
+    <xs:complexType>
+      <xs:attribute name="HF" form="qualified" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="TRAITEMENT-LING-ADV">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="lod:TRADUCTION-DOMINANTE"/>
+        <xs:element maxOccurs="unbounded" ref="lod:UNITE-TRAD"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="MS-TYPE-ART">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="lod:CAT-GRAM-ART"/>
+        <xs:element maxOccurs="unbounded" ref="lod:TRAITEMENT-LING-ART"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CAT-GRAM-ART">
+    <xs:complexType>
+      <xs:attribute name="TYPE-ART" use="required" form="qualified" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="TRAITEMENT-LING-ART">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="lod:INFO-GRAM-ART"/>
+        <xs:element ref="lod:TRADUCTION-DOMINANTE"/>
+        <xs:element ref="lod:UNITE-TRAD"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="INFO-GRAM-ART">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="lod:NOMBRE-ART"/>
+        <xs:element ref="lod:GENRE-ART"/>
+        <xs:element ref="lod:CAS-ART"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="NOMBRE-ART">
+    <xs:complexType>
+      <xs:attribute name="NB-ART" use="required" form="qualified" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GENRE-ART">
+    <xs:complexType>
+      <xs:attribute name="GENRE-ART" use="required" form="qualified" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CAS-ART">
+    <xs:complexType>
+      <xs:attribute name="CAS-ART" use="required" form="qualified" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="MS-TYPE-CONJ">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="lod:CAT-GRAM-CONJ"/>
+        <xs:choice>
+          <xs:element ref="lod:RENVOI-CONJ"/>
+          <xs:element ref="lod:TRAITEMENT-LING-CONJ"/>
+        </xs:choice>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CAT-GRAM-CONJ">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="RENVOI-CONJ">
+    <xs:complexType>
+      <xs:choice>
+        <xs:element ref="lod:VARIANTE-HOMOSEME"/>
+        <xs:element ref="lod:VARIANTE-ORTHOGRAPHIQUE"/>
+      </xs:choice>
+      <xs:attribute name="REF-ID-ITEM-ADRESSE" use="required" form="qualified" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="TRAITEMENT-LING-CONJ">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="lod:TRADUCTION-DOMINANTE"/>
+        <xs:element maxOccurs="unbounded" ref="lod:UNITE-TRAD"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="MS-TYPE-ELEM-COMP">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="lod:CAT-GRAM-ELEM-COMP"/>
+        <xs:element ref="lod:UNITE-TRAD"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CAT-GRAM-ELEM-COMP">
+    <xs:complexType>
+      <xs:attribute name="C-G-EC" use="required" form="qualified" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="MS-TYPE-PART">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="lod:CAT-GRAM-PART"/>
+        <xs:choice>
+          <xs:element ref="lod:RENVOI-PART"/>
+          <xs:element ref="lod:TRAITEMENT-LING-PART"/>
+        </xs:choice>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CAT-GRAM-PART">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="RENVOI-PART">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="lod:VARIANTE-HOMOSEME"/>
+      </xs:sequence>
+      <xs:attribute name="REF-ID-ITEM-ADRESSE" use="required" form="qualified" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="TRAITEMENT-LING-PART">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="lod:TRADUCTION-DOMINANTE"/>
+        <xs:element ref="lod:UNITE-TRAD"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="MS-TYPE-PREP">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="lod:CAT-GRAM-PREP"/>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="lod:TRAITEMENT-LING-PREP"/>
+        <xs:element minOccurs="0" ref="lod:MARQUE-USAGE"/>
+        <xs:element minOccurs="0" ref="lod:RENVOI-PREP"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CAT-GRAM-PREP">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="TRAITEMENT-LING-PREP">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="lod:CAS-ATTENDU"/>
+        <xs:element ref="lod:SPATIOTEMP"/>
+        <xs:element ref="lod:TRADUCTION-DOMINANTE"/>
+        <xs:element maxOccurs="unbounded" ref="lod:UNITE-TRAD"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CAS-ATTENDU">
+    <xs:complexType>
+      <xs:attribute name="CAS" use="required" form="qualified" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SPATIOTEMP">
+    <xs:complexType>
+      <xs:attribute name="ST" use="required" form="qualified" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="MS-TYPE-PREP-plus-ART">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="lod:CAT-GRAM-PREP-plus-ART"/>
+        <xs:element ref="lod:COMPOSITION"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CAT-GRAM-PREP-plus-ART">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="MS-TYPE-PRON">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="lod:CAT-GRAM-PRON"/>
+        <xs:choice>
+          <xs:element ref="lod:RENVOI-PRON"/>
+          <xs:element maxOccurs="unbounded" ref="lod:TRAITEMENT-LING-PRON"/>
+        </xs:choice>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CAT-GRAM-PRON">
+    <xs:complexType>
+      <xs:attribute name="TYPE-PRON" use="required" form="qualified" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RENVOI-PRON">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="lod:VARIANTE-HOMOSEME"/>
+      </xs:sequence>
+      <xs:attribute name="REF-ID-ITEM-ADRESSE" use="required" form="qualified" type="xs:NCName"/>
+      <xs:attribute name="REFS-IDS-UNITES-DE-SENS" use="required" form="qualified"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="TRAITEMENT-LING-PRON">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="lod:INFO-GRAM-PRON"/>
+        <xs:element minOccurs="0" ref="lod:COMPLEMENT-PRON"/>
+        <xs:element ref="lod:TRADUCTION-DOMINANTE"/>
+        <xs:element maxOccurs="unbounded" ref="lod:UNITE-TRAD"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="INFO-GRAM-PRON">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:choice minOccurs="0">
+          <xs:element ref="lod:NOMBRE-PRON"/>
+          <xs:element ref="lod:PERSONNE-PRON"/>
+        </xs:choice>
+        <xs:element minOccurs="0" ref="lod:GENRE-PRON"/>
+        <xs:element minOccurs="0" ref="lod:CAS-PRON"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="NOMBRE-PRON">
+    <xs:complexType>
+      <xs:attribute name="NB-PRON" use="required" form="qualified" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PERSONNE-PRON">
+    <xs:complexType>
+      <xs:attribute name="PERSONNE" use="required" form="qualified" type="xs:NMTOKEN"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GENRE-PRON">
+    <xs:complexType>
+      <xs:attribute name="GENRE-PRON" use="required" form="qualified" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CAS-PRON">
+    <xs:complexType>
+      <xs:attribute name="CAS-PRON" use="required" form="qualified" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="COMPLEMENT-PRON">
+    <xs:complexType>
+      <xs:attribute name="GENRE-PRON" use="required" form="qualified" type="xs:NCName"/>
+      <xs:attribute name="NB-PRON" use="required" form="qualified" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="MS-TYPE-PRONADV">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="lod:CAT-GRAM-PRONADV"/>
+        <xs:choice>
+          <xs:element ref="lod:COMPOSITION"/>
+          <xs:element ref="lod:RENVOI-ADV"/>
+        </xs:choice>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CAT-GRAM-PRONADV">
+    <xs:complexType>
+      <xs:attribute name="C-G-PA" use="required" form="qualified" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="MS-TYPE-SUBST">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="lod:CAT-GRAM-SUBST"/>
+        <xs:element ref="lod:GENRE"/>
+        <xs:element ref="lod:TYPE-SUBST"/>
+        <xs:element ref="lod:PLURIEL"/>
+        <xs:choice minOccurs="0">
+          <xs:element ref="lod:TRAITEMENT-LING-SUBST"/>
+          <xs:element ref="lod:RENVOI-ET-TRAIT-LING-SUPPL-SUBST"/>
+        </xs:choice>
+        <xs:element minOccurs="0" ref="lod:MARQUE-USAGE"/>
+        <xs:element minOccurs="0" ref="lod:RENVOI-SUBST"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CAT-GRAM-SUBST">
+    <xs:complexType>
+      <xs:attribute name="C-G-SUBST" form="qualified" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GENRE">
+    <xs:complexType>
+      <xs:attribute name="GEN" use="required" form="qualified" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="TYPE-SUBST">
+    <xs:complexType>
+      <xs:choice>
+        <xs:element ref="lod:DIM-MOT-SIMPLE-NON-TRAITE"/>
+        <xs:element ref="lod:DIMINUTIF"/>
+        <xs:element ref="lod:NOM-D-ELEMENT-HYDROLOGIQUE"/>
+        <xs:element ref="lod:NOM-DE-LOCALITE"/>
+        <xs:element ref="lod:NOM-DE-LOCALITE-NON-LUX"/>
+        <xs:element ref="lod:NOM-DE-PAYS"/>
+        <xs:element ref="lod:POLYLEX-FR"/>
+        <xs:element ref="lod:SUBST-COMP-PREMIER-ELEM-NON-TRAITE"/>
+        <xs:element ref="lod:SUBST-COMPOSE"/>
+        <xs:element ref="lod:SUBST-SIMPLE"/>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DIM-MOT-SIMPLE-NON-TRAITE">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="DIMINUTIF">
+    <xs:complexType>
+      <xs:attribute name="REF-ID-ARTICLE-DOMIN" use="required" form="qualified" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="NOM-D-ELEMENT-HYDROLOGIQUE">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="NOM-DE-LOCALITE">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="NOM-DE-LOCALITE-NON-LUX">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="NOM-DE-PAYS">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="POLYLEX-FR">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="SUBST-COMP-PREMIER-ELEM-NON-TRAITE">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="SUBST-COMPOSE">
+    <xs:complexType>
+      <xs:attribute name="REF-ID-ARTICLE-DOMIN" use="required" form="qualified"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SUBST-SIMPLE">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="RENVOI-ET-TRAIT-LING-SUPPL-SUBST">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="lod:RENVOI-SUBST"/>
+        <xs:element ref="lod:TRAITEMENT-LING-SUBST"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="MS-TYPE-VRB">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="lod:CAT-GRAM-VRB"/>
+        <xs:choice>
+          <xs:element ref="lod:NEMMEN-AM-INFINITIV"/>
+          <xs:sequence>
+            <xs:element ref="lod:VRB-AUXILIAIRE"/>
+            <xs:element maxOccurs="unbounded" ref="lod:PARTICIPE-PASSE"/>
+          </xs:sequence>
+        </xs:choice>
+        <xs:choice>
+          <xs:element ref="lod:RENVOI-VRB"/>
+          <xs:element maxOccurs="unbounded" ref="lod:TRAITEMENT-LING-VRB"/>
+        </xs:choice>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CAT-GRAM-VRB">
+    <xs:complexType>
+      <xs:attribute name="C-G-VRB" form="qualified" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="NEMMEN-AM-INFINITIV">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="VRB-AUXILIAIRE">
+    <xs:complexType>
+      <xs:attribute name="AUXIL" use="required" form="qualified" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PARTICIPE-PASSE" type="xs:NCName"/>
+  <xs:element name="RENVOI-VRB">
+    <xs:complexType>
+      <xs:choice>
+        <xs:element ref="lod:VARIANTE-HOMOSEME"/>
+        <xs:element ref="lod:VARIANTE-ORTHOGRAPHIQUE"/>
+      </xs:choice>
+      <xs:attribute name="REF-ID-ITEM-ADRESSE" use="required" form="qualified" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="TRAITEMENT-LING-VRB">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="lod:REFLEX-PRONOM"/>
+        <xs:element ref="lod:EMPLOI-IMPERS"/>
+        <xs:element ref="lod:TRADUCTION-DOMINANTE"/>
+        <xs:element maxOccurs="unbounded" ref="lod:UNITE-TRAD"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="REFLEX-PRONOM">
+    <xs:complexType>
+      <xs:attribute name="REFPRON" use="required" form="qualified" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="EMPLOI-IMPERS">
+    <xs:complexType>
+      <xs:attribute name="EMPLOI-IMPERS" use="required" form="qualified" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RESEAU-NON-SEMANTIQUE">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="lod:CITOYEN"/>
+        <xs:element minOccurs="0" ref="lod:CITOYENNE"/>
+        <xs:element minOccurs="0" ref="lod:PAYS"/>
+        <xs:element minOccurs="0" ref="lod:ADJ-CORRESP"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CITOYEN">
+    <xs:complexType>
+      <xs:attribute name="REF-ID-ITEM-ADRESSE" use="required" form="qualified" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CITOYENNE">
+    <xs:complexType>
+      <xs:attribute name="REF-ID-ITEM-ADRESSE" use="required" form="qualified" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PAYS">
+    <xs:complexType>
+      <xs:attribute name="REF-ID-ITEM-ADRESSE" use="required" form="qualified" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ADJ-CORRESP">
+    <xs:complexType>
+      <xs:attribute name="REF-ID-ITEM-ADRESSE" use="required" form="qualified" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="tag">
+    <xs:complexType mixed="true">
+      <xs:attribute name="typ" use="required" form="qualified" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AUDIO">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="xs:base64Binary">
+          <xs:attribute name="FORMAT" use="required" form="qualified" type="xs:NCName"/>
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="FLX-ADJ">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="lod:GRONDFORMEN"/>
+        <xs:element ref="lod:DEKL"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GRONDFORMEN">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="lod:POSITIV"/>
+        <xs:element minOccurs="0" ref="lod:KOMPARATIV"/>
+        <xs:element minOccurs="0" ref="lod:SUPERLATIV"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DEKL">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="lod:POSITIV"/>
+        <xs:element minOccurs="0" ref="lod:KOMPARATIV"/>
+        <xs:element minOccurs="0" ref="lod:SUPERLATIV"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="FLX-VRB">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="lod:INFINITIF"/>
+        <xs:element ref="lod:PART-PASS"/>
+        <xs:choice maxOccurs="unbounded">
+          <xs:element ref="lod:CONDITIONNEL"/>
+          <xs:element ref="lod:IMPERATIF"/>
+          <xs:element ref="lod:INDICATIF"/>
+        </xs:choice>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="INFINITIF" type="xs:NCName"/>
+  <xs:element name="PART-PASS" type="xs:string"/>
+  <xs:element name="CONDITIONNEL">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="lod:PRESENT-SIMPLE"/>
+        <xs:element ref="lod:PRESENT-COMPOSE"/>
+        <xs:element ref="lod:PASSE-COMPOSE"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PRESENT-SIMPLE">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:sequence minOccurs="0">
+          <xs:element ref="lod:P1"/>
+          <xs:element ref="lod:P2"/>
+        </xs:sequence>
+        <xs:element minOccurs="0" ref="lod:P3"/>
+        <xs:sequence minOccurs="0">
+          <xs:element ref="lod:P4"/>
+          <xs:element ref="lod:P5"/>
+        </xs:sequence>
+        <xs:element minOccurs="0" ref="lod:P6"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PRESENT-COMPOSE">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="lod:P1"/>
+        <xs:element minOccurs="0" ref="lod:P2"/>
+        <xs:element minOccurs="0" ref="lod:P3"/>
+        <xs:sequence minOccurs="0">
+          <xs:element ref="lod:P4"/>
+          <xs:element ref="lod:P5"/>
+        </xs:sequence>
+        <xs:element minOccurs="0" ref="lod:P6"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="IMPERATIF" type="lod:PRESENT"/>
+  <xs:element name="INDICATIF">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="lod:PRESENT">
+          <xs:sequence>
+            <xs:element minOccurs="0" ref="lod:IMPARFAIT"/>
+            <xs:element ref="lod:PASSE-COMPOSE"/>
+            <xs:element ref="lod:PLUS-QUE-PARFAIT"/>
+          </xs:sequence>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="IMPARFAIT">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:sequence minOccurs="0">
+          <xs:element ref="lod:P1"/>
+          <xs:element ref="lod:P2"/>
+        </xs:sequence>
+        <xs:element minOccurs="0" ref="lod:P3"/>
+        <xs:sequence minOccurs="0">
+          <xs:element ref="lod:P4"/>
+          <xs:element ref="lod:P5"/>
+        </xs:sequence>
+        <xs:element minOccurs="0" ref="lod:P6"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PLUS-QUE-PARFAIT">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="lod:P1"/>
+        <xs:element minOccurs="0" ref="lod:P2"/>
+        <xs:element minOccurs="0" ref="lod:P3"/>
+        <xs:sequence minOccurs="0">
+          <xs:element ref="lod:P4"/>
+          <xs:element ref="lod:P5"/>
+        </xs:sequence>
+        <xs:element minOccurs="0" ref="lod:P6"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="META">
+    <xs:complexType>
+      <xs:attribute name="ID" form="qualified" type="xs:NCName"/>
+      <xs:attribute name="VERSIOUN" use="required" form="qualified" type="xs:date"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RENVOI-ADV">
+    <xs:complexType>
+      <xs:choice>
+        <xs:element ref="lod:ELEMENT-DE-COMPOSITION"/>
+        <xs:element ref="lod:VARIANTE-HOMOSEME"/>
+        <xs:element ref="lod:VARIANTE-ORTHOGRAPHIQUE"/>
+      </xs:choice>
+      <xs:attribute name="REF-ID-ITEM-ADRESSE" use="required" form="qualified" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="COMPOSITION">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:choice maxOccurs="unbounded">
+          <xs:element ref="lod:RENVOI-ADV"/>
+          <xs:element ref="lod:RENVOI-PREP"/>
+          <xs:element ref="lod:TYPE-COMPOSITION"/>
+        </xs:choice>
+        <xs:element minOccurs="0" ref="lod:RENVOI-ART"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="TYPE-COMPOSITION">
+    <xs:complexType>
+      <xs:attribute name="TYPE" use="required" form="qualified" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RENVOI-ART">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="lod:ELEMENT-DE-COMPOSITION"/>
+      </xs:sequence>
+      <xs:attribute name="REF-ID-ITEM-ADRESSE" use="required" form="qualified" type="xs:NCName"/>
+      <xs:attribute name="REFS-IDS-UNITES-DE-SENS" use="required" form="qualified"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PLURIEL">
+    <xs:complexType>
+      <xs:choice>
+        <xs:element ref="lod:TJ-MASSIF"/>
+        <xs:element ref="lod:TJ-NOMBRABLE"/>
+        <xs:element ref="lod:ALT-MASSIF-NOMBRABLE"/>
+        <xs:element ref="lod:MWS"/>
+        <xs:element ref="lod:PLURALE-TANTUM"/>
+        <xs:element ref="lod:SITUATION-PLURIEL-COMPLEXE"/>
+        <xs:sequence>
+          <xs:element ref="lod:M"/>
+          <xs:element ref="lod:W"/>
+          <xs:element ref="lod:S"/>
+        </xs:sequence>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ALT-MASSIF-NOMBRABLE">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="lod:FORME-PLURIEL"/>
+      </xs:sequence>
+      <xs:attribute name="REFS-IDS-UNITES-DE-SENS-COMPT" use="required" form="qualified"/>
+      <xs:attribute name="REFS-IDS-UNITES-DE-SENS-FREQ-PLUR-PLUS" form="qualified" type="xs:NCName"/>
+      <xs:attribute name="REFS-IDS-UNITES-DE-SENS-MASS" use="required" form="qualified"/>
+      <xs:attribute name="REFS-IDS-UNITES-DE-SENS-PL-TANTUM" form="qualified"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="MWS">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="lod:NOM"/>
+        <xs:element ref="lod:AKK"/>
+        <xs:element ref="lod:DAT"/>
+        <xs:element ref="lod:GEN"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PLURALE-TANTUM">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="SITUATION-PLURIEL-COMPLEXE">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="RENVOI-SUBST">
+    <xs:complexType>
+      <xs:choice>
+        <xs:element ref="lod:VARIANTE-HOMOSEME"/>
+        <xs:element ref="lod:VARIANTE-ORTHOGRAPHIQUE"/>
+        <xs:element ref="lod:FORME-ABREGEE"/>
+        <xs:element ref="lod:FORME-DIMINUTIVE"/>
+        <xs:element ref="lod:FORME-FEM"/>
+        <xs:element ref="lod:FORME-MASC"/>
+        <xs:element ref="lod:VARIANTE-LOCALE"/>
+      </xs:choice>
+      <xs:attribute name="REF-ID-ITEM-ADRESSE" use="required" form="qualified" type="xs:NCName"/>
+      <xs:attribute name="REFS-IDS-UNITES-DE-SENS" use="required" form="qualified"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="FORME-ABREGEE">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="FORME-DIMINUTIVE">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="FORME-FEM" type="lod:SYNONS"/>
+  <xs:element name="FORME-MASC" type="lod:SYNONS"/>
+  <xs:element name="VARIANTE-LOCALE">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="TRAITEMENT-LING-SUBST">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="lod:TRADUCTION-DOMINANTE"/>
+        <xs:element maxOccurs="unbounded" ref="lod:UNITE-TRAD"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="MARQUE-USAGE">
+    <xs:complexType>
+      <xs:attribute name="STYLE" form="qualified" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="TRADUCTION-DOMINANTE">
+    <xs:complexType>
+      <xs:choice>
+        <xs:element ref="lod:TRAD-ALL-DOMIN"/>
+        <xs:element ref="lod:TRAD-FR-DOMIN"/>
+        <xs:element ref="lod:PAS-DE-TRAD-DOMIN"/>
+        <xs:element ref="lod:TRAD-ALL-FR-DOMIN"/>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PAS-DE-TRAD-DOMIN">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="TRAD-ALL-FR-DOMIN">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="lod:TRAD-ALL-DOMIN"/>
+        <xs:element ref="lod:TRAD-FR-DOMIN"/>
+        <xs:element minOccurs="0" ref="lod:TRAD-ADJ-FONCT-ADV-FR-DOMIN"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="TRAD-ADJ-FONCT-ADV-FR-DOMIN" type="xs:string"/>
+  <xs:element name="UNITE-TRAD">
+    <xs:complexType>
+      <xs:choice>
+        <xs:element ref="lod:PAS-DE-TRAD-SUBORDONNANTE"/>
+        <xs:element ref="lod:TRAD-ALL-FR-SUBORDONNANTE"/>
+        <xs:element ref="lod:TRAD-ALL-SUBORDONNANTE"/>
+        <xs:element ref="lod:TRAD-FR-SUBORDONNANTE"/>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PAS-DE-TRAD-SUBORDONNANTE">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="lod:UNITE-DE-SENS"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="TRAD-ALL-FR-SUBORDONNANTE">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="lod:TRAD-ALL-SUBORD"/>
+        <xs:element ref="lod:TRAD-FR-SUBORD"/>
+        <xs:element maxOccurs="unbounded" ref="lod:UNITE-DE-SENS"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="TRAD-ALL-SUBORDONNANTE">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="lod:TRAD-ALL-SUBORD"/>
+        <xs:element maxOccurs="unbounded" ref="lod:UNITE-DE-SENS"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="TRAD-FR-SUBORDONNANTE">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="lod:TRAD-FR-SUBORD"/>
+        <xs:element maxOccurs="unbounded" ref="lod:UNITE-DE-SENS"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="VARIANTE-HOMOSEME">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="RENVOI-PREP">
+    <xs:complexType>
+      <xs:choice>
+        <xs:element ref="lod:ELEMENT-DE-COMPOSITION"/>
+        <xs:element ref="lod:VARIANTE-HOMOSEME"/>
+        <xs:element ref="lod:VARIANTE-ORTHOGRAPHIQUE"/>
+      </xs:choice>
+      <xs:attribute name="REF-ID-ITEM-ADRESSE" use="required" form="qualified" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="VARIANTE-ORTHOGRAPHIQUE">
+    <xs:complexType/>
+  </xs:element>
+  <xs:complexType name="PRESENT">
+    <xs:sequence>
+      <xs:element ref="lod:PRESENT"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="PRESENT">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="lod:P1"/>
+        <xs:element minOccurs="0" ref="lod:P2"/>
+        <xs:element minOccurs="0" ref="lod:P3"/>
+        <xs:element minOccurs="0" ref="lod:P4"/>
+        <xs:element minOccurs="0" ref="lod:P5"/>
+        <xs:element minOccurs="0" ref="lod:P6"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="P1" type="xs:string"/>
+  <xs:element name="P2" type="xs:string"/>
+  <xs:element name="P3" type="xs:string"/>
+  <xs:element name="P4" type="xs:string"/>
+  <xs:element name="P5" type="xs:string"/>
+  <xs:element name="P6" type="xs:string"/>
+  <xs:element name="PASSE-COMPOSE">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="lod:P1"/>
+        <xs:element minOccurs="0" ref="lod:P2"/>
+        <xs:element minOccurs="0" ref="lod:P3"/>
+        <xs:sequence minOccurs="0">
+          <xs:element ref="lod:P4"/>
+          <xs:element ref="lod:P5"/>
+        </xs:sequence>
+        <xs:element minOccurs="0" ref="lod:P6"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="POSITIV">
+    <xs:complexType mixed="true">
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element ref="lod:PLURIEL"/>
+        <xs:element ref="lod:SINGULIER"/>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="KOMPARATIV">
+    <xs:complexType mixed="true">
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element ref="lod:PLURIEL"/>
+        <xs:element ref="lod:SINGULIER"/>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SUPERLATIV">
+    <xs:complexType mixed="true">
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element ref="lod:PLURIEL"/>
+        <xs:element ref="lod:SINGULIER"/>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ELEMENT-DE-COMPOSITION">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="M">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="lod:NOM"/>
+        <xs:element ref="lod:AKK"/>
+        <xs:element ref="lod:DAT"/>
+        <xs:element ref="lod:GEN"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="W">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="lod:NOM"/>
+        <xs:element ref="lod:AKK"/>
+        <xs:element ref="lod:DAT"/>
+        <xs:element ref="lod:GEN"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="S">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="lod:NOM"/>
+        <xs:element ref="lod:AKK"/>
+        <xs:element ref="lod:DAT"/>
+        <xs:element ref="lod:GEN"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="FORME-PLURIEL">
+    <xs:complexType mixed="true">
+      <xs:attribute name="EIFEL" form="qualified"/>
+      <xs:attribute name="FREQ-PLURIEL" form="qualified" type="xs:NCName"/>
+      <xs:attribute name="TYPE-PLURIEL" use="required" form="qualified" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="NOM" type="xs:string"/>
+  <xs:element name="AKK" type="xs:string"/>
+  <xs:element name="DAT" type="xs:string"/>
+  <xs:element name="GEN" type="xs:string"/>
+  <xs:element name="TJ-NOMBRABLE">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="lod:FORME-PLURIEL"/>
+      </xs:sequence>
+      <xs:attribute name="REFS-IDS-UNITES-DE-SENS-FREQ-PLUR-PLUS" form="qualified"/>
+      <xs:attribute name="REFS-IDS-UNITES-DE-SENS-PL-TANTUM" form="qualified"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="TJ-MASSIF">
+    <xs:complexType/>
+  </xs:element>
+  <xs:complexType name="SYNONS">
+    <xs:sequence>
+      <xs:element ref="lod:SYNONS"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="SYNONS">
+    <xs:complexType>
+      <xs:choice>
+        <xs:element ref="lod:SYN-ABS"/>
+        <xs:element ref="lod:SYN-PRES"/>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SYN-ABS">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="SYN-PRES">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="lod:TERME-SYNON"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="TERME-SYNON" type="xs:NCName"/>
+  <xs:element name="TRAD-FR-DOMIN" type="xs:string"/>
+  <xs:element name="TRAD-ALL-DOMIN" type="xs:string"/>
+  <xs:element name="TRAD-FR-SUBORD" type="xs:string"/>
+  <xs:element name="UNITE-DE-SENS">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:choice minOccurs="0">
+          <xs:element ref="lod:INDICATION-SPECIALE"/>
+          <xs:element ref="lod:INDICATION-SPECIALE-PLURIEL-SUBST"/>
+        </xs:choice>
+        <xs:element maxOccurs="unbounded" ref="lod:DOM-SPEC"/>
+        <xs:element maxOccurs="unbounded" ref="lod:MARQUE-USAGE"/>
+        <xs:element minOccurs="0" ref="lod:UNITE-POLYLEX-LUX"/>
+        <xs:element ref="lod:EQUIV-TRAD-ALL"/>
+        <xs:element ref="lod:EQUIV-TRAD-FR"/>
+        <xs:element minOccurs="0" ref="lod:EQUIV-TRAD-EN"/>
+        <xs:element minOccurs="0" ref="lod:EQUIV-TRAD-PO"/>
+        <xs:element ref="lod:EXEMPLIFICATION"/>
+        <xs:element ref="lod:SYNONYMES"/>
+      </xs:sequence>
+      <xs:attribute name="FREQ-EMPLOI" form="qualified" type="xs:NCName"/>
+      <xs:attribute name="ID-UNITE-DE-SENS" use="required" form="qualified" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="INDICATION-SPECIALE">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="lod:TJ-AU-COND"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="TJ-AU-COND">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="INDICATION-SPECIALE-PLURIEL-SUBST">
+    <xs:complexType>
+      <xs:choice>
+        <xs:element ref="lod:TJ-MASSIF"/>
+        <xs:element ref="lod:TJ-NOMBRABLE"/>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DOM-SPEC">
+    <xs:complexType>
+      <xs:attribute name="DOM" form="qualified" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UNITE-POLYLEX-LUX" type="xs:string"/>
+  <xs:element name="EQUIV-TRAD-ALL">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="lod:ETA-NON-EXPLICITE"/>
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+          <xs:element ref="lod:ETA-EXPLICITE"/>
+          <xs:element ref="lod:RS-ETA-ABSENTE"/>
+          <xs:element ref="lod:RS-ETA-PRESENTE"/>
+        </xs:choice>
+        <xs:element minOccurs="0" ref="lod:INFO-FONCTION-ETA"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ETA-NON-EXPLICITE">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="ETA-EXPLICITE">
+    <xs:complexType mixed="true">
+      <xs:attribute name="FONCTION-ETA" use="required" form="qualified" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RS-ETA-ABSENTE">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="RS-ETA-PRESENTE" type="xs:string"/>
+  <xs:element name="INFO-FONCTION-ETA" type="xs:string"/>
+  <xs:element name="EQUIV-TRAD-FR">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+          <xs:element ref="lod:ETF-EXPLICITE"/>
+          <xs:element ref="lod:RS-ETF-ABSENTE"/>
+          <xs:element ref="lod:RS-ETF-PRESENTE"/>
+        </xs:choice>
+        <xs:element minOccurs="0" ref="lod:INFO-FONCTION-ETF"/>
+        <xs:element minOccurs="0" ref="lod:ETF-NON-EXPLICITE"/>
+        <xs:element minOccurs="0" ref="lod:ETF-ALT"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ETF-EXPLICITE">
+    <xs:complexType mixed="true">
+      <xs:attribute name="FONCTION-ETF" use="required" form="qualified" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RS-ETF-ABSENTE">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="RS-ETF-PRESENTE" type="xs:string"/>
+  <xs:element name="INFO-FONCTION-ETF" type="xs:string"/>
+  <xs:element name="ETF-NON-EXPLICITE">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="ETF-ALT">
+    <xs:complexType mixed="true">
+      <xs:attribute name="TYPE-ETF-ALT" use="required" form="qualified" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="EQUIV-TRAD-EN">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:choice maxOccurs="unbounded">
+          <xs:element ref="lod:ETE-EXPLICITE"/>
+          <xs:element ref="lod:RS-ETE-PRESENTE"/>
+        </xs:choice>
+        <xs:choice minOccurs="0">
+          <xs:element ref="lod:ETE-ALT"/>
+          <xs:element ref="lod:INFO-FONCTION-ETE"/>
+        </xs:choice>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ETE-EXPLICITE">
+    <xs:complexType mixed="true">
+      <xs:attribute name="FONCTION-ETE" use="required" form="qualified" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RS-ETE-PRESENTE" type="xs:string"/>
+  <xs:element name="ETE-ALT">
+    <xs:complexType mixed="true">
+      <xs:attribute name="TYPE-ETE-ALT" use="required" form="qualified" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="INFO-FONCTION-ETE" type="xs:string"/>
+  <xs:element name="EQUIV-TRAD-PO">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:choice maxOccurs="unbounded">
+          <xs:element ref="lod:ETP-EXPLICITE"/>
+          <xs:element ref="lod:RS-ETP-PRESENTE"/>
+        </xs:choice>
+        <xs:choice minOccurs="0">
+          <xs:element ref="lod:ETP-ALT"/>
+          <xs:element ref="lod:INFO-FONCTION-ETP"/>
+        </xs:choice>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ETP-EXPLICITE">
+    <xs:complexType mixed="true">
+      <xs:attribute name="FONCTION-ETP" use="required" form="qualified" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RS-ETP-PRESENTE" type="xs:string"/>
+  <xs:element name="ETP-ALT">
+    <xs:complexType mixed="true">
+      <xs:attribute name="TYPE-ETP-ALT" use="required" form="qualified" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="INFO-FONCTION-ETP" type="xs:string"/>
+  <xs:element name="EXEMPLIFICATION">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="lod:EXEMPLE"/>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="lod:EXEMPLE-GLOSE"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="EXEMPLE">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="lod:TEXTE-EX"/>
+      </xs:sequence>
+      <xs:attribute name="MARQUE-USAGE" form="qualified"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="EXEMPLE-GLOSE">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="lod:TEXTE-EX"/>
+        <xs:element maxOccurs="unbounded" ref="lod:GLOSE"/>
+      </xs:sequence>
+      <xs:attribute name="MARQUE-USAGE" form="qualified"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GLOSE">
+    <xs:complexType>
+      <xs:choice maxOccurs="unbounded">
+        <xs:element ref="lod:ABREV-AD"/>
+        <xs:element ref="lod:TEXTE"/>
+      </xs:choice>
+      <xs:attribute name="SENS-EX-GLOSE" form="qualified" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SYNONYMES">
+    <xs:complexType>
+      <xs:choice>
+        <xs:element ref="lod:SYN-ABSENTS"/>
+        <xs:element ref="lod:SYN-PRESENTS"/>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SYN-ABSENTS">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="SYN-PRESENTS">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="lod:TERME-SYN"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="TERME-SYN" type="xs:string"/>
+  <xs:element name="TRAD-ALL-SUBORD" type="xs:string"/>
+  <xs:element name="SINGULIER">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="lod:M"/>
+        <xs:element minOccurs="0" ref="lod:W"/>
+        <xs:element minOccurs="0" ref="lod:S"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="TEXTE-EX">
+    <xs:complexType>
+      <xs:choice maxOccurs="unbounded">
+        <xs:element ref="lod:ABREV-AD"/>
+        <xs:element ref="lod:TEXTE"/>
+        <xs:element ref="lod:LEMME-DOMIN"/>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="LEMME-DOMIN">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="xs:NCName">
+          <xs:attribute name="REF-ID-UNITE-DE-SENS" use="required" form="qualified" type="xs:NCName"/>
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ABREV-AD" type="xs:string"/>
+  <xs:element name="TEXTE">
+    <xs:complexType mixed="true">
+      <xs:attribute name="id" form="qualified" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
