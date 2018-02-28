@@ -1,6 +1,6 @@
 <?php
-// To remove php memory limits
-//ini_set('memory_limit', '-1');
+// Increase php memory limits
+ini_set('memory_limit', '256M');
 $folder = '../lod-dictionary-mirror/XML';
 
 
