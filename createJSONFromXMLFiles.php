@@ -167,7 +167,7 @@ foreach (new DirectoryIterator($folder) as $fc => $fileInfo) {
 
                                         foreach ($equivTradFr->children() as $translation) {
                                             if (!strpos($translation->getName(), 'ABSENTE')) {
-                                                if (strpos($translation->getName(), 'ETA-PRESENTE')){
+                                                if (strpos($translation->getName(), 'ETF-PRESENTE')){
                                                     $meaning['translations']['fr'][] = "[".(string)$translation."]";
                                                 } else {
                                                     $meaning['translations']['fr'][] = (string)$translation;
@@ -178,7 +178,7 @@ foreach (new DirectoryIterator($folder) as $fc => $fileInfo) {
                                         if ($equivTradEn) {
                                             foreach ($equivTradEn->children() as $translation) {
                                                 if (!strpos($translation->getName(), 'ABSENTE')) {
-                                                    if (strpos($translation->getName(), 'ETA-PRESENTE')){
+                                                    if (strpos($translation->getName(), 'ETE-PRESENTE')){
                                                         $meaning['translations']['en'][] = "[".(string)$translation."]";
                                                     } else {
                                                         $meaning['translations']['en'][] = (string)$translation;
@@ -190,7 +190,7 @@ foreach (new DirectoryIterator($folder) as $fc => $fileInfo) {
                                         if ($equivTradPo) {
                                             foreach ($equivTradPo->children() as $translation) {
                                                 if (!strpos($translation->getName(), 'ABSENTE')) {
-                                                    if (strpos($translation->getName(), 'ETA-PRESENTE')){
+                                                    if (strpos($translation->getName(), 'ETP-PRESENTE')){
                                                         $meaning['translations']['pt'][] = "[".(string)$translation."]";
                                                     } else {
                                                         $meaning['translations']['pt'][] = (string)$translation;
