@@ -132,6 +132,8 @@ foreach (new DirectoryIterator($folder) as $fc => $fileInfo) {
                             $pasDeTradSubordonnante = $uniteTrad->{$key_1}[0];
                             if ($pasDeTradSubordonnante) {
                                 $unitesDeSens = $pasDeTradSubordonnante->{'UNITE-DE-SENS'};
+                                $tradAllSubord = $pasDeTradSubordonnante->{'TRAD-ALL-SUBORD'};
+                                $tradFrSubord = $pasDeTradSubordonnante->{'TRAD-FR-SUBORD'};
                                 if ($unitesDeSens) {
                                     foreach ($unitesDeSens as $uniteDeSens) {
                                         $domSpec      = $uniteDeSens->{'DOM-SPEC'};
@@ -155,10 +157,25 @@ foreach (new DirectoryIterator($folder) as $fc => $fileInfo) {
                                         $meaning['examples'] = [];
                                         $meaning['translations']['lb'][] = (string)$meaningLux;
 
+                                        if (!$meaningLux){
+                                            if($tradAllSubord){
+                                                $meaning['translations']['de'][] = (string)$tradAllSubord;
+                                            }
+                                            if($tradFrSubord){
+                                                $meaning['translations']['fr'][] = (string)$tradFrSubord;
+                                            }
+                                        }
+
                                         foreach ($equivTradAll->children() as $translation) {
                                             if (!strpos($translation->getName(), 'ABSENTE')) {
                                                 if (strpos($translation->getName(), 'ETA-PRESENTE')){
                                                     $meaning['translations']['de'][] = "[".(string)$translation."]";
+                                                } elseif (strpos($translation->getName(), '-ALT')){
+                                                    if (strpos((string)$translation->attributes()[0],"ADVERBIALE-ADJ")){
+                                                        $meaning['translations']['de'][] = "<".(string)$translation.">";
+                                                    } else {
+                                                        $meaning['translations']['de'][] = (string)$translation;
+                                                    }
                                                 } else {
                                                     $meaning['translations']['de'][] = (string)$translation;
                                                 }
@@ -169,6 +186,12 @@ foreach (new DirectoryIterator($folder) as $fc => $fileInfo) {
                                             if (!strpos($translation->getName(), 'ABSENTE')) {
                                                 if (strpos($translation->getName(), 'ETF-PRESENTE')){
                                                     $meaning['translations']['fr'][] = "[".(string)$translation."]";
+                                                } elseif (strpos($translation->getName(), '-ALT')){
+                                                    if (strpos((string)$translation->attributes()[0],"ADVERBIALE-ADJ")){
+                                                        $meaning['translations']['fr'][] = "<".(string)$translation.">";
+                                                    } else {
+                                                        $meaning['translations']['fr'][] = (string)$translation;
+                                                    }
                                                 } else {
                                                     $meaning['translations']['fr'][] = (string)$translation;
                                                 }
@@ -180,6 +203,12 @@ foreach (new DirectoryIterator($folder) as $fc => $fileInfo) {
                                                 if (!strpos($translation->getName(), 'ABSENTE')) {
                                                     if (strpos($translation->getName(), 'ETE-PRESENTE')){
                                                         $meaning['translations']['en'][] = "[".(string)$translation."]";
+                                                    } elseif (strpos($translation->getName(), '-ALT')){
+                                                        if (strpos((string)$translation->attributes()[0],"ADVERBIALE-ADJ")){
+                                                            $meaning['translations']['en'][] = "<".(string)$translation.">";
+                                                        } else {
+                                                            $meaning['translations']['en'][] = (string)$translation;
+                                                        }
                                                     } else {
                                                         $meaning['translations']['en'][] = (string)$translation;
                                                     }
@@ -192,6 +221,12 @@ foreach (new DirectoryIterator($folder) as $fc => $fileInfo) {
                                                 if (!strpos($translation->getName(), 'ABSENTE')) {
                                                     if (strpos($translation->getName(), 'ETP-PRESENTE')){
                                                         $meaning['translations']['pt'][] = "[".(string)$translation."]";
+                                                    } elseif (strpos($translation->getName(), '-ALT')){
+                                                        if (strpos((string)$translation->attributes()[0],"ADVERBIALE-ADJ")){
+                                                            $meaning['translations']['pt'][] = "<".(string)$translation.">";
+                                                        } else {
+                                                            $meaning['translations']['pt'][] = (string)$translation;
+                                                        }
                                                     } else {
                                                         $meaning['translations']['pt'][] = (string)$translation;
                                                     }
