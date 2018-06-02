@@ -264,7 +264,9 @@ foreach (new DirectoryIterator($folder) as $fc => $fileInfo) {
                                                     }
                                                 }
                                             }
-                                            $meaning['examples'][] = trim((string)$example_text);
+                                            if (strpos(trim((string)$example_text),"lorem ipsum") === false){
+                                                $meaning['examples'][] = trim((string)$example_text);
+                                            }
                                         }
                                         $data['meanings'][] = $meaning;
                                     }     
@@ -304,4 +306,4 @@ foreach (new DirectoryIterator($folder) as $fc => $fileInfo) {
     }
 }
 
-file_put_contents('lod.json', json_encode($lemmas, JSON_PRETTY_PRINT));
+file_put_contents('../data/lod.json', json_encode($lemmas, JSON_PRETTY_PRINT));
