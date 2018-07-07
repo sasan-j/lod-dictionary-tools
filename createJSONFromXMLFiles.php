@@ -239,7 +239,13 @@ foreach (new DirectoryIterator($folder) as $fc => $fileInfo) {
                                             $example_text = "";
                                             foreach ($example->children() as $chunk) {
                                                 if ($chunk->getName()=='TEXTE') {
-                                                    if (preg_match('/[\?!.;]$/',(string)$chunk)){
+                                                    // to remove already added space before ?!.
+                                                    if ((strlen((string)$chunk) == 1) &&
+                                                        preg_match('/[\?!.]/',(string)$chunk)){
+                                                            $example_text = substr($example_text, 0, -1).(string)$chunk;
+                                                    }
+                                                    // to remove already added space before ,
+                                                    elseif (preg_match('/^[,]/',(string)$chunk)){
                                                         $example_text = substr($example_text, 0, -1).(string)$chunk;
                                                     } else {
                                                         $example_text .= (string)$chunk;
@@ -249,12 +255,24 @@ foreach (new DirectoryIterator($folder) as $fc => $fileInfo) {
                                                     $sign = (string)$chunk;
                                                     if (preg_match('/\.e$/',$sign)){
                                                         $example_text .= " ".$data['lemma']."e ";
-                                                    } elseif (preg_match('/[a-zA-Z\x7f-\xff]\.$/', $sign)) {
+                                                    } 
+                                                    elseif (preg_match('/[a-zA-Z\x7f-\xff]\.$/', $sign)) {
                                                         if (mb_substr($example_text,-1) === '\''){
                                                             $example_text .= $data['lemma']." ";    
-                                                        } else {
+                                                        } 
+                                                        else // A letter followed by a .
+                                                        {
                                                             $example_text .= " ".$data['lemma']." ";
                                                         }
+                                                    } 
+                                                    // Letter followed by a . and followed by another letter
+                                                    elseif (preg_match('/[a-zA-Z\x7f-\xff]\.[a-zA-Z]$/', $sign)){
+                                                        $tmp_word = $data['lemma'];
+                                                        //If anything makes to first letter upper case
+                                                        $tmp_word[0] = $sign[0];
+                                                        //probably adds an e to the end of the word
+                                                        $tmp_word .= $sign[-1];
+                                                        $example_text .= " ".$tmp_word." ";
                                                     } else {
                                                         if (mb_substr($example_text,-1) === '\''){
                                                             $example_text .= $sign." ";    
